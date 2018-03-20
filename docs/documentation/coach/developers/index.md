@@ -1,10 +1,11 @@
 ---
 layout: default
-title: Coach
-description:
-keywords: coach, documentation, web performance
+title: Coach for developers.
+description: What you need to know to do changes to the coach.
+keywords: coach, documentation, developers, web performance
 author: Peter Hedenskog
 nav: documentation
+category: coach
 image: https://www.sitespeed.io/img/sitespeed-2.0-twitter.png
 twitterdescription:
 ---
@@ -22,8 +23,8 @@ You need install [Node.js](https://nodejs.org/en/), [npm](https://nodejs.org/en/
 
 When you got them installed you can clone the project (or rather first fork it and clone your fork).
 
-```
-$ git clone git@github.com:sitespeedio/coach.git
+```bash
+git clone git@github.com:sitespeedio/coach.git
 ```
 
 Inside your coach folder install the dependencies and run the tests to check that everything works:
@@ -193,7 +194,7 @@ Each test case runs against a specific HTML page located in `test/http-server` C
 ## Test your changes against a web page
 The coach uses Browsertime as runner for browsers. When you finished with a change, make sure to build a new version of the combined Javascript and then test against a url.
 
-```bash
+```
 npm run combine
 bin/index.js https://www.sitespeed.io firefox
 ```

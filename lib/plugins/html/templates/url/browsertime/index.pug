@@ -20,9 +20,9 @@ if options.browsertime.video
 
   a.button.button-download(href=harName, download=harDownloadName) Download HAR
 
-  if options.browsertime.chrome && options.browsertime.chrome.dumpTraceCategoriesLog
+  if options.browsertime.chrome && options.browsertime.chrome.collectTracingEvents
     - var tracePath = 'data/trace-' + (runNumber? runNumber-1 : 0) + '.json.gz'
-    a.button.button-download(href=tracePath, download=downloadName + 'timeline.json.gz') Download timeline
+    a.button.button-download(href=tracePath, download=downloadName + '-timeline.json.gz') Download timeline
 
   if options.browsertime.video
     - var tracePath = 'data/video/' + (runIndex ? runIndex : 0) +'.mp4'
@@ -54,22 +54,19 @@ if options.browsertime.speedIndex
           td.number #{visualMetrics.VisualComplete85.toFixed(0)}
         tr
           td
+            a(href=baseHelpURL + 'VisualComplete95') Visual Complete 95%
+          td.number #{visualMetrics.VisualComplete95.toFixed(0)}
+        tr
+          td
+            a(href=baseHelpURL + 'VisualComplete99') Visual Complete 99%
+          td.number #{visualMetrics.VisualComplete99.toFixed(0)}
+        tr
+          td
             a(href=baseHelpURL + 'LastVisualChange') Last Visual Change
           td.number #{visualMetrics.LastVisualChange.toFixed(0)}
     .one-half.column
-      table
-        tr
-          th(colspan='2') Visual Progress
-        - var allRows = browsertime.visualMetrics.VisualProgress.split(',')
-        - var oldPercentage = -1;
-        each eachRow in allRows
-          - var row = eachRow.split('=')
-          //- Sometimes VisualMetrics report the same percentage multiple times after each other
-          if row[1] !== oldPercentage
-            - oldPercentage = row[1]
-            tr
-              td #{row[1]}
-              td #{row[0]} ms
+      .ct-chart.ct-minor-sixth#ct-visualprogress
+      include ./visualProgress.pug
 
 a#browsermetrics
 h3 Browser Metrics
@@ -88,7 +85,12 @@ h3 Browser Metrics
     table
       tr
         th(colspan='2') Specials and User Timing
-      if timings.firstPaint > -1
+      if (timings.paintTiming && Object.keys(timings.paintTiming).length > 0)
+        each value, name in timings.paintTiming
+          tr
+            td #{name}
+            td.number #{value.toFixed(0)}
+      else if timings.firstPaint > -1
         tr
           td
             a(href=baseHelpURL + 'firstPaint') First paint
@@ -125,3 +127,6 @@ if browsertime.custom
         td #{value}
 else
   p There are no custom configured scripts.
+
+if options.browsertime.chrome && options.browsertime.chrome.collectCPUMetrics
+  include ./cpu.pug

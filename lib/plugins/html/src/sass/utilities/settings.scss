@@ -17,26 +17,25 @@ $color--white: #ffffff;
 $color--grey: #e1e1e1;
 $color--black: #222222;
 
-
 //
 // 2. TYPEFACES
 //
 
-$font--helvetica: "Helvetica Neue", Helvetica, Arial, sans-serif;
+$font--versions: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica,
+ Arial, sans-serif;
 
 $font--weight--light: 300;
 $font--weight--regular: 400;
 $font--weight--heavy: 800;
 
-
 //
 // 3. BASE STYLES
 //
 
-$base--font-family : $font--helvetica;
-$base--font-weight : $font--weight--regular;
-$base--font-color  : $color--black;
-$base--font-size   : 15px;
-$base--line-height : 1.6;
-$base--spacing     : 20px;
-$base--body-bg     : $color--white;
+$base--font-family: $font--versions;
+$base--font-weight: $font--weight--regular;
+$base--font-color: $color--black;
+$base--font-size: 100%;
+$base--line-height: 1.6;
+$base--spacing: 20px;
+$base--body-bg: $color--white;

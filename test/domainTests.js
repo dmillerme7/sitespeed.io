@@ -13,10 +13,14 @@ describe('domains', function() {
     let har;
 
     beforeEach(function() {
-      return fs.readFileAsync(path.resolve(__dirname, 'fixtures', 'www-theverge-com.har'), 'utf8')
+      return fs
+        .readFileAsync(
+          path.resolve(__dirname, 'fixtures', 'www-theverge-com.har'),
+          'utf8'
+        )
         .then(JSON.parse)
-        .tap((data) => {
-          har = data
+        .tap(data => {
+          har = data;
         });
     });
 
@@ -25,7 +29,7 @@ describe('domains', function() {
         aggregator.addToAggregate(har, 'http://www.vox.com');
         const summary = aggregator.summarize();
         const voxDomain = summary.groups.total['cdn1.vox-cdn.com'];
-        expect(voxDomain).to.have.deep.property('connect.max', '11');
+        expect(voxDomain).to.have.nested.property('connect.max', 11);
       });
     });
   });

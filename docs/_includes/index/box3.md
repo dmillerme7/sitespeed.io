@@ -1,5 +1,8 @@
-## There's a new Coach in town
+## What tool should I use?
 * * *
-[<img src="{{site.baseurl}}/img/logos/coach.png" class="pull-left img-big" alt="I'm the coach" width="155" height="180">]({{site.baseurl}}/documentation/coach)
 
-The Godfather of web performance tools [YSlow is dead](http://4.bp.blogspot.com/-gEqiZsYvoV4/T2FM-E7UvcI/AAAAAAAAIeE/Sg0GxV2hVLE/s1600/PDVD_138.BMP). It died a couple of years after the first release and finally there's something new that can guide you in the web performance jungle: [The Coach]({{site.baseurl}}/documentation/coach/) gives you advice on how you can make your web page more performant.
+[<img src="{{site.baseurl}}/img/pippi.png" class="pull-left img-big" alt="The power of sitespeed.io" width="180" height="151">](https://dashboard.sitespeed.io)
+
+If you want to measure the performance and are only interested in timing metrics, you should focus on using [Browsertime]({{site.baseurl}}/documentation/browsertime/). If you want it all: use [sitespeed.io]({{site.baseurl}}/documentation/sitespeed.io/). It is the main tool that uses all sitespeed.io tools and add supports for testing multiple pages as well as adds the ability to report the metrics to a TSDB (Graphite and InfluxDB).
+
+If you are a performance tool maker you should look at  [The coach]({{site.baseurl}}/documentation/coach/), [Browsertime]({{site.baseurl}}/documentation/browsertime/), [Chrome-HAR](https://github.com/sitespeedio/chrome-har), [PageXray]({{site.baseurl}}/documentation/pagexray/) and [Throttle]({{site.baseurl}}/documentation/throttle/). They can all help you depending on what you are building.

@@ -4,6 +4,7 @@ title: Pre/post scripts (log in the user)
 description: You can login the user to test pages as a logged in user.
 keywords: selenium, web performance, sitespeed.io
 nav: documentation
+category: sitespeed.io
 image: https://www.sitespeed.io/img/sitespeed-2.0-twitter.png
 twitterdescription: Pre/post scripts (log in the user)
 ---
@@ -21,9 +22,9 @@ Before sitespeed.io loads and tests a URL you can run your own Selenium script. 
 We use the NodeJs version of Selenium, you can find the [API documentation here](http://seleniumhq.github.io/selenium/docs/api/javascript/index.html).
 
 ## Login example
-Create a script where you login the user. The followiing is an example to login the user at Wikipedia. Start by creating a file login.js with the following.
+Create a script where you login the user. The following is an example to login the user at Wikipedia. Start by creating a file login.js with the following.
 
-~~~ bash
+~~~
 module.exports = {
   run(context) {
     return context.runWithDriver((driver) => {
@@ -47,7 +48,8 @@ module.exports = {
           const loginForm = driver.findElement(By.name('userlogin'));
           driver.findElement(By.id('wpName1')).sendKeys(userName);
           driver.findElement(By.id('wpPassword1')).sendKeys(password);
-          loginForm.submit();
+          var loginButton = driver.findElement(webdriver.By.id('wpLoginAttempt'));
+          loginButton.click();
           // we wait for something on the page that verifies that we are logged in
           return driver.wait(until.elementLocated(By.id('pt-userpage')), 3000);
         });
@@ -61,8 +63,8 @@ Make sure to change the username & password
 
 Then run it like this:
 
-~~~ bash
-$ sitespeed.io --preScript login.js https://en.wikipedia.org/wiki/Barack_Obama
+~~~bash
+docker run --shm-size=1g --rm -v "$(pwd)":/sitespeed.io sitespeedio/sitespeed.io:{% include version/sitespeed.io.txt %} --preScript /sitespeed.io/login.js https://en.wikipedia.org/wiki/Barack_Obama
 ~~~
 
 The script will then login the user and access https://en.wikipedia.org/wiki/Barack_Obama and measure that page.
@@ -83,7 +85,7 @@ One other thing you can do with a pre script is simulate a user that browsed a c
 
 Create a pre script (pre.js):
 
-~~~ bash
+~~~
 module.exports = {
   run(context) {
     return context.runWithDriver((driver) => {
@@ -96,11 +98,8 @@ module.exports = {
 
 And then run it like this:
 
-~~~ bash
-$ sitespeed.io --preScript pre.js -b chrome https://www.sitespeed.io/documentation/
+~~~bash
+docker run --shm-size=1g --rm -v "$(pwd)":/sitespeed.io sitespeedio/sitespeed.io:{% include version/sitespeed.io.txt %} --preScript /sitespeed.io/pre.js -b chrome https://www.sitespeed.io/documentation/
 ~~~
 
 The browser will first access https://www.sitespeed.io/, this will fill the cache and then go to https://www.sitespeed.io/documentation/ where it will collect all the metrics.
-
-Firefox (and/or the HAR Export trigger) has a bug that reports requests in the HAR file as 200 not flagging that they are from the local browser cache. Follow the [bug here](https://github.com/sitespeedio/browsertime/issues/121). We recommend you use Chrome until this is fixed.
-{: .note .note-warning}

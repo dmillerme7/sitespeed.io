@@ -4,7 +4,7 @@
 
 'use strict';
 
-const cli = require('../lib/support/cli'),
+const cli = require('../lib/cli/cli'),
   sitespeed = require('../lib/sitespeed'),
   Promise = require('bluebird');
 
@@ -41,7 +41,10 @@ sitespeed
     }
   })
   .then(() => {
-    if (!budgetFailing) {
+    if (
+      !budgetFailing ||
+      (parsed.options.budget && parsed.options.budget.suppressExitCode)
+    ) {
       process.exitCode = 0;
     }
   })
